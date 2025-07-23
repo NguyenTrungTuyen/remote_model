@@ -1,0 +1,3 @@
+** nest new remote_module
+** npm install --save @nestjs/websockets @nestjs/platform-socket.io socket.io
+** npm install @nestjs/serve-static

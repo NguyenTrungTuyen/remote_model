@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Remote Control</title>
+</head>
+<body>
+  <h1> Model</h1>
+  <button onclick="sendCmd('next')">Next</button>
+  <button onclick="sendCmd('prev')">Previous</button>
+  <button onclick="sendCmd('shutdown')">Shutdown</button>
+
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script>
+    const socket = io("http://192.168.10.121:3000");
+    // const socket = io("http://localhost:3000"); // hoặc http://127.0.0.1:3000
+
+    socket.on("connect", () => {
+      console.log("✅ Connected:", socket.id);
+    });
+
+    socket.on("ack", (data) => {
+      console.log("✅ Server ack:", data);
+    });
+
+    function sendCmd(cmd) {
+      socket.emit("control", cmd);
+      console.log("📤 Sent:", cmd);
+    }
+  </script>
+</body>
+</html>

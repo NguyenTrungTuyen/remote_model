@@ -1,56 +1,96 @@
-# compiled output
+# Compiled output
 /dist
-/node_modules
 /build
+/.webpack
+
+# Node dependencies
+/node_modules
 
 # Logs
 logs
 *.log
 npm-debug.log*
-pnpm-debug.log*
 yarn-debug.log*
-yarn-error.log*
+pnpm-debug.log*
 lerna-debug.log*
 
-# OS
+# OS-specific files
 .DS_Store
+Thumbs.db
 
-# Tests
+# Test coverage
 /coverage
 /.nyc_output
 
-# IDEs and editors
-/.idea
+# Test outputs
+/test-results
+/test-report
+
+# Editor folders and settings
+.idea
 .project
 .classpath
 .c9/
 *.launch
 .settings/
 *.sublime-workspace
+*.sublime-project
 
-# IDE - VSCode
+# VSCode settings (keep only useful shared configs)
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
 
-# dotenv environment variable files
+# Environment variables
 .env
+.env.local
+.env.*.local
 .env.development.local
 .env.test.local
 .env.production.local
-.env.local
 
-# temp directory
+# Temp directories
 .temp
 .tmp
+.cache
+.next
 
 # Runtime data
 pids
 *.pid
-*.seed
 *.pid.lock
+*.seed
 
-# Diagnostic reports (https://nodejs.org/api/report.html)
+# Diagnostic reports
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# TypeScript specific
+*.tsbuildinfo
+tsconfig.build.tsbuildinfo
+
+# NestJS build & CLI artifacts
+.nest-cli.json
+nestjs-cli.json
+
+# PM2 process manager logs/dumps
+*.pm2.log
+*.dmp
+.dump
+
+# Swagger generated files (if any)
+/swagger.json
+/swagger.yaml
+/openapi.json
+
+# Docker artifacts (if used)
+/docker-compose.override.yml
+.Dockerfile*
+
+# Prisma (nếu dùng)
+prisma/migrations/
+prisma/dev.db
+
+/node_modules
+

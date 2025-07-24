@@ -93,4 +93,55 @@ export class ControlGateway implements OnGatewayConnection, OnGatewayDisconnect 
     // Xử lý logic di chuyển overlay (ví dụ: cập nhật vị trí overlay trên server)
     return { event: 'ack', data: `Overlay move command received: ${data.direction}` };
   }
+
+  // Nhận dữ liệu từ FE và gửi socket về App Electron
+@SubscribeMessage('control')
+handleControl(client: Socket, payload: any): void {
+  try {
+    const clientType = client.handshake.query.type as string;
+    const deviceId = client.handshake.query.deviceId as string;
+
+    if (!deviceId || clientType !== 'FE') {
+      throw new Error('Unauthorized control command');
+    }
+
+    if (!payload || typeof payload !== 'object') {
+      throw new Error('Invalid control payload');
+    }
+
+    console.log(`🎮 FE → App [${deviceId}]:`, payload);
+
+    // Gửi tới App Electron trong room tương ứng
+    this.server.to(`device-${deviceId}`).emit('control-from-fe', payload);
+  } catch (error) {
+    console.error('❌ handleControl error:', error.message);
+    client.emit('error', { message: error.message });
+  }
+}
+
+// Nhận trạng thái từ App Electron và gửi socket lên FE
+@SubscribeMessage('state-update')
+handleStateUpdate(client: Socket, payload: any): void {
+  try {
+    const clientType = client.handshake.query.type as string;
+    const deviceId = client.handshake.query.deviceId as string;
+
+    if (!deviceId || clientType !== 'Electron') {
+      throw new Error('Unauthorized state update');
+    }
+
+    if (!payload || typeof payload !== 'object') {
+      throw new Error('Invalid state-update payload');
+    }
+
+    console.log(`📡 App → FE [${deviceId}]:`, payload);
+
+    // Gửi tới FE client trong room tương ứng
+    this.server.to(`device-${deviceId}`).emit('state-from-app', payload);
+  } catch (error) {
+    console.error('❌ handleStateUpdate error:', error.message);
+    client.emit('error', { message: error.message });
+  }
+}
+
 }

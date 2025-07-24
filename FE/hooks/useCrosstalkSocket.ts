@@ -63,7 +63,7 @@ export function useCrosstalkSocket(): UseCrosstalkSocketReturn {
   const maxReconnectAttempts = 3
 
   // Get socket URL from environment or use default
-  const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:4000"
+  const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3003"
 
   const clearReconnectTimeout = useCallback(() => {
     if (reconnectTimeoutRef.current) {
